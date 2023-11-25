@@ -1,5 +1,5 @@
 import AgoraRTC from 'agora-rtc-sdk-ng'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import VideoConference from '../component/VideoConference'
 
@@ -12,6 +12,7 @@ const Room = () => {
   const [userid, setUserid] = useState(null)
   const [localTracks, setLocalTracks] = useState(null)
   const [remoteUsers, setRemoteUsers] = useState({})
+  const videoConferenceRef = useRef(null)
 
   useEffect(() => {
     initAgoraClient()
@@ -57,7 +58,11 @@ const Room = () => {
   //用户进入
   const handleUserPublished = async (user, mediaType, agoraClient) => {
     await agoraClient.subscribe(user, mediaType)
-    user['mediaType'] = mediaType
+    if (mediaType === 'audio' || mediaType === 'video') {
+      if (videoConferenceRef.current) {
+        videoConferenceRef.current.subscribeUser(user, mediaType)
+      }
+    }
     setRemoteUsers((prevUsers) => {
       return { ...prevUsers, [user.uid]: user }
     })
@@ -78,6 +83,7 @@ const Room = () => {
         localTracks={localTracks}
         remoteUsers={remoteUsers}
         uid={userid}
+        ref={videoConferenceRef}
       />
     </div>
   )
