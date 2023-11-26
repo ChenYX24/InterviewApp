@@ -13,6 +13,7 @@ const Room = () => {
   const [localTracks, setLocalTracks] = useState(null)
   const [remoteUsers, setRemoteUsers] = useState({})
   const videoConferenceRef = useRef(null)
+  const [lastLeftUserId, setLastLeftUserId] = useState(null)
 
   useEffect(() => {
     initAgoraClient()
@@ -75,6 +76,7 @@ const Room = () => {
       delete newUsers[user.uid]
       return newUsers
     })
+    setLastLeftUserId(user.uid) // 设置最近离开的用户 ID
   }
 
   return (
@@ -83,6 +85,8 @@ const Room = () => {
         localTracks={localTracks}
         remoteUsers={remoteUsers}
         uid={userid}
+        lastLeftUserId={lastLeftUserId}
+        setLastLeftUserId={setLastLeftUserId}
         ref={videoConferenceRef}
       />
     </div>
