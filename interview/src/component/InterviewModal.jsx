@@ -44,7 +44,7 @@ function InterviewModal({ title, placeholder, onClose, onConfirm }) {
       setError(true)
       return
     }
-    navigate(`/room/${roomNumber}`)
+    navigate(`/room/${roomNumber}`, { state: { isInterviewer: isInterviewer } });
     onConfirm(roomNumber, isInterviewer)
   }
   return (

@@ -1,10 +1,11 @@
 import AgoraRTC from 'agora-rtc-sdk-ng'
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams,useLocation } from 'react-router-dom'
 import VideoConference from '../component/VideoConference'
 
 const APP_ID = '91ed5671b5224d52915716656792d2f6' // 替换为您的 Agora App ID
 const TOKEN = null // 替换为您的 Agora Token
+
 
 const Room = () => {
   const { roomId } = useParams()
@@ -14,10 +15,15 @@ const Room = () => {
   const [remoteUsers, setRemoteUsers] = useState({})
   const videoConferenceRef = useRef(null)
   const [lastLeftUserId, setLastLeftUserId] = useState(null)
+  const [isInterviewer, setIsInterviewer] = useState(null)
+
+  const location = useLocation();
 
   useEffect(() => {
+    setIsInterviewer(location.state.isInterviewer)
     initAgoraClient()
   }, [roomId])
+
   const initAgoraClient = async () => {
     const agoraClient = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' })
     setClient(agoraClient)
@@ -27,7 +33,7 @@ const Room = () => {
       sessionStorage.setItem('uid', uid)
     }
     setUserid(uid)
-    console.log(uid)
+    // console.log(uid)
     await agoraClient.join(APP_ID, roomId, TOKEN, uid)
     //有其他用户进来则执行
     agoraClient.on('user-published', (user, mediaType) =>
@@ -90,6 +96,8 @@ const Room = () => {
         ref={videoConferenceRef}
       />
     </div>
+
+
   )
 }
 
