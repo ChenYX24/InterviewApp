@@ -3,7 +3,7 @@ import SideBarCss from '../css/SideBar.module.css'
 
 const SideBar = forwardRef(
     (
-      { remoteUsers, uid, isInterviewer },
+      { uid, isInterviewer, roomId },
     ) => {
       const [chats, setChats] = useState([])
       const [users, setUsers] = useState([])
@@ -25,7 +25,12 @@ const SideBar = forwardRef(
         newSocket.onopen = () => {
           console.log('WebSocket 连接已建立');
           // 可以在连接建立时发送一些初始化信息
-          newSocket.send('Hello Server');
+          var username = getRandomWord();
+          var auth = "admin";
+          if(isInterviewer === false)
+          auth = "user";
+          init(roomId, uid, username, auth);
+          //newSocket.send('Hello Server');
         };
       
         // 监听消息接收事件
@@ -61,21 +66,20 @@ const SideBar = forwardRef(
             handleChatSend(isFromMe,inputValue,send);
             break;
           case "get_out":
-            var activeAuth = receivedMessage.data.auth;
-            if(activeAuth === "admin" && isInterviewer === false)
+            if(isInterviewer === false)
             {
               setForceOut(true);
             }
             break;
           case "shut_down":
-            var activeAuth = receivedMessage.data.auth;
-            if(activeAuth === "admin" && isInterviewer === false)
+            if(isInterviewer === false)
             {
               setForceShut(true);
             }
             break;
           case "mapping":
-
+            var usersData = receivedMessage.data.usermap;
+            updateUsers(usersData);
             break;
         }
       }, [receivedMessage])
@@ -98,34 +102,64 @@ const SideBar = forwardRef(
       },[forceOut])
 
       //这里实时更新用户列表
-      useEffect(() => {
-        const updatedUsers = [];
-        let id = 1;
+      // useEffect(() => {
+      //   const updatedUsers = [];
+      //   let id = 1;
         
-        // 将对象的值提取为数组
-        const remoteUsersArray = Object.values(remoteUsers);
+      //   // 将对象的值提取为数组
+      //   const remoteUsersArray = Object.values(remoteUsers);
       
-        // 遍历 renderOrderArray
-        for (const userObj of remoteUsersArray) {
-          updatedUsers.push({ id: id.toString(), name: userObj.uid });
-          id++;
-        }
+      //   // 遍历 renderOrderArray
+      //   for (const userObj of remoteUsersArray) {
+      //     updatedUsers.push({ id: id.toString(), name: userObj.uid });
+      //     id++;
+      //   }
       
+      //   setUsers(updatedUsers);
+      // }, [remoteUsers]);
+
+      //通过后端实时更新用户列表
+      const updateUsers = (usersData) => {
+        const updatedUsers = usersData.map((user, index) => ({
+          id: (index + 1).toString(),
+          uid: user.uuid,
+          username: user.username,
+          auth: user.auth,
+        }));
         setUsers(updatedUsers);
-      }, [remoteUsers]);
+      }
       
       //传递JSON文件给后端
-      const sendDataToBackEnd = (type, usermap, username, msg, auth) => {
+      const sendDataToBackEnd = (type, msg, receiver) => {
         const jsonData = {
           type: type,
-          data: {
-            usermap: usermap,
-            username: username,
-            msg: msg,
-            auth: auth,
-          },
+          data: msg,
+          receiver: receiver,
         };
        socket.send(JSON.stringify(jsonData));
+      }
+
+      //随机产生字符串username
+      const getRandomWord = () => {
+        const nowDate = new Date()
+          .getTime()
+          .toString()
+          .substr(5, 15);
+        const randowStr = Math.random()
+          .toString(36)
+          .substr(2);
+        return `${nowDate}${randowStr}`;
+      };
+
+      //发送初始化消息
+      const init = (roomid, uuid, username, auth) => {
+        const jsonData = {
+          roomid: roomid,
+          uuid: uuid,
+          username: username,
+          auth: auth,
+        };
+        socket.send(JSON.stringify(jsonData));
       }
 
       //传递聊天框中的数据
@@ -134,16 +168,13 @@ const SideBar = forwardRef(
         //传递到本地聊天记录
         handleChatSend(isFromMe,inputValue,send);
         //发送给后端同一份
-        sendDataToBackEnd("send_msg",null,uid,inputValue,null);
+        sendDataToBackEnd("send_msg", inputValue ,null);
       }
 
       //处理聊天记录信息（无论是本地的还是外部的）
       const handleChatSend = (isFromMe,content,send) => {
         // 这里是处理发送消息的逻辑，可以根据需要进行相应的处理
         // 例如，添加新消息到当前聊天记录中
-        // if (chats.length % 2 === 0)
-        // isFromMe = true;
-        // else isFromMe = false;
         const newChat = {
           id: chats.length + 1,
           text: content.toString(),
@@ -192,9 +223,9 @@ const SideBar = forwardRef(
             <h3>用户列表</h3>
               {users.map((user) => (
                 <div key={user.id} className={SideBarCss.user_row}>
-                  <span>{user.name}</span>
-                  <button className={SideBarCss.button_user} onClick={() => sendDataToBackEnd("shut_down",null,uid,null,isInterviewer === true ? "admin" : "user")}>静音</button>
-                  <button className={SideBarCss.button_user} onClick={() => sendDataToBackEnd("get_out",null,uid,null,isInterviewer === true ? "admin" : "user")}>移出</button>
+                  <span>{user.username}</span>
+                  {isInterviewer && user.auth === "user" && <button className={SideBarCss.button_user} onClick={() => sendDataToBackEnd("shut_down", null, user.uid)}>静音</button>}
+                  {isInterviewer && user.auth === "user" && <button className={SideBarCss.button_user} onClick={() => sendDataToBackEnd("get_out", null, user.uid)}>移出</button>}
                 </div>
               ))}
           </div>

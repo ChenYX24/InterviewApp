@@ -98,9 +98,9 @@ const Room = () => {
         ref={videoConferenceRef}
       />
       <SideBar 
-        remoteUsers={remoteUsers}
         uid={userid}
         isInterviewer={isInterviewer}
+        roomId={roomId}
       />
       </div>
     </div>
