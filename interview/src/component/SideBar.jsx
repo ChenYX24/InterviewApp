@@ -101,23 +101,6 @@ const SideBar = forwardRef(
         }
       },[forceOut])
 
-      //这里实时更新用户列表
-      // useEffect(() => {
-      //   const updatedUsers = [];
-      //   let id = 1;
-        
-      //   // 将对象的值提取为数组
-      //   const remoteUsersArray = Object.values(remoteUsers);
-      
-      //   // 遍历 renderOrderArray
-      //   for (const userObj of remoteUsersArray) {
-      //     updatedUsers.push({ id: id.toString(), name: userObj.uid });
-      //     id++;
-      //   }
-      
-      //   setUsers(updatedUsers);
-      // }, [remoteUsers]);
-
       //通过后端实时更新用户列表
       const updateUsers = (usersData) => {
         const updatedUsers = usersData.map((user, index) => ({
@@ -213,7 +196,7 @@ const SideBar = forwardRef(
               name="myInput"
             />
             <div className={SideBarCss['button-wrapper']}>
-              <button onClick={() => passInput(true,uid)}>发送</button>
+              <button onClick={() => passInput(true,username)}>发送</button>
             </div>
           </div>
         </div>
