@@ -1,0 +1,15 @@
+{
+  "database": {
+    "type": "mysql",
+    "host": "scutbot.icu:3306",
+    "name": "interview",
+    "user": "root",
+    "passwd": "Singapore",
+    "charset": "utf8mb4",
+    "parsetime": "True"
+  },
+  "server": {
+    "addr": 11111,
+    "port": 8888
+  }
+}
