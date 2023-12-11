@@ -1,0 +1,171 @@
+/*SideBar.module.css*/
+/* 整个聊天容器的样式 */
+  .chat_container {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    width: 80vw;
+    border: 1px solid black;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: white;
+    margin: auto;
+  }
+  
+  /* 转换按钮的样式 */
+  .switch_buttons{
+    height: 6vh;
+    width: 100%;
+    margin:auto;
+    margin-bottom: 10px;
+  }
+
+  .button_left{
+    width:45%;
+    height:5vh;
+    background-color: hwb(195 0% 0%);
+    margin-left:20px;
+    margin-right:2px;
+    margin-bottom:10px;
+    color:white;
+    font-size:10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    float:left;
+  }
+
+  .button_right{
+    width:45%;
+    height:5vh;
+    background-color: hwb(195 0% 0%);
+    margin-left:2px;
+    margin-right:20px;
+    margin-bottom:10px;
+    color:white;
+    font-size:10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    float:right;
+  }
+
+  .button_user{
+    width:10%;
+    height:8vh;
+    background-color: hwb(195 0% 0%);
+    color:white;
+    font-size:8px;
+    border: 1px solid black;
+    border-radius: 5px;
+    float:right;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  /* 聊天消息的样式 */
+  .chat_list{
+    margin-top: 5px;
+    height: 70vh;
+    width: 100%;
+    background-color: white;
+  }
+  .chat {
+    height: 60vh;
+    width: 100%;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid black;
+    overflow-y: auto;
+  }
+  
+  .from_me {
+    background-color: #4CAF50;
+    align-self: flex-end;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    float: right;
+    width: 50%;
+  }
+  
+  .from_them {
+    background-color: white;
+    align-self: flex-start;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    float: left;
+    width: 50%;
+  }
+
+  .user_list{
+    background-color: white;
+    overflow: auto;
+    height: 70vh;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    h3{
+      text-align: center;
+    }
+  }
+  
+  .user_row{
+    background-color: white;
+    color:black;
+    width:90%;
+    height:10vh;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin:auto;
+  }
+
+  .input_area{
+    background-color: #4CAF50;
+    height: 8vh;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .button-wrapper {
+    margin-top:-5px;
+    height: 8vh;
+    width: 10%; /* 与原始样式保持一致 */
+    display: flex;
+    align-items: center; /* 垂直居中按钮 */
+  }
+  
+  .button-wrapper button {
+      width:100%;
+      height:8vh;
+      background-color: hwb(195 0% 0%);
+      color:white;
+      font-size:16px;
+  }
+
+  /* 输入框和发送按钮的样式 */
+  textarea[type="text"] {
+    height: 8vh;
+    width: 90%;
+    margin-top: 0px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize:none;
+  }
+  
+  button {
+    width: 60px;
+    padding: 8px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+  }

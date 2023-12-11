@@ -2,6 +2,7 @@ import AgoraRTC from 'agora-rtc-sdk-ng'
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams,useLocation } from 'react-router-dom'
 import VideoConference from '../component/VideoConference'
+import SideBar from '../component/SideBar'
 
 const APP_ID = '91ed5671b5224d52915716656792d2f6' // 替换为您的 Agora App ID
 const TOKEN = null // 替换为您的 Agora Token
@@ -87,7 +88,8 @@ const Room = () => {
 
   return (
     <div>
-      <VideoConference
+      <div>
+      <VideoConference 
         localTracks={localTracks}
         remoteUsers={remoteUsers}
         uid={userid}
@@ -95,6 +97,12 @@ const Room = () => {
         setLastLeftUserId={setLastLeftUserId}
         ref={videoConferenceRef}
       />
+      <SideBar 
+        remoteUsers={remoteUsers}
+        uid={userid}
+        isInterviewer={isInterviewer}
+      />
+      </div>
     </div>
 
 
