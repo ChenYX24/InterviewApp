@@ -4,6 +4,7 @@ import SideBarCss from '../css/SideBar.module.css'
 const SideBar = forwardRef(
     (
       { uid, isInterviewer, roomId },
+      ref
     ) => {
       const [chats, setChats] = useState([])
       const [users, setUsers] = useState([])
@@ -17,17 +18,47 @@ const SideBar = forwardRef(
       const [receivedMessage, setReceivedMessage] = useState('');
       const [socket, setSocket] = useState(null);
 
-      //前后端socket的交互
       useEffect(() => {
-        var newUsername = getRandomWord();
+        const newUsername = getRandomWord();
         setUsername(newUsername);
-        console.log(username,uid);
-      }, []);
-      
+        // 创建 WebSocket 连接
+        const newSocket = new WebSocket('ws://localhost:8888/ws');
+        // 存储 WebSocket 连接到组件状态中
+        setSocket(newSocket);
+        // 在组件卸载时关闭 WebSocket 连接
+        return () => {
+          newSocket.close();
+        };
+      },[])
+
+      useEffect(() =>{
+        if(socket)
+        {
+          // 监听连接建立事件
+          socket.onopen = () => {
+            console.log('WebSocket 连接已建立');
+            // 可以在连接建立时发送一些初始化信息
+            var auth = "admin";
+            if(isInterviewer === false)
+            auth = "user";
+            init(roomId, uid, username, auth);
+          };
+        
+          // 监听消息接收事件
+          socket.onmessage = (event) => {
+            const receivedData = JSON.parse(event.data);
+            setReceivedMessage(receivedData); // 更新状态
+          };
+        
+          // 监听连接关闭事件
+          socket.onclose = (event) => {
+            console.log('WebSocket 连接已关闭:', event);
+          };
+        }
+      },[socket])
 
       //这里处理的是接受消息的处理逻辑
       useEffect(() => {
-        console.log(username,uid);
         const messageType = receivedMessage.type;
         switch(messageType)
         {
@@ -64,50 +95,6 @@ const SideBar = forwardRef(
         }
       },[forceShut])
 
-      //这里只有当username变化的时候才执行
-      useEffect(() => {
-  
-        // 创建 WebSocket 连接
-        const newSocket = new WebSocket('ws://localhost:8888/ws');
-
-        console.log(username);
-
-        // 存储 WebSocket 连接到组件状态中
-        setSocket(newSocket);
-
-      },[username])
-
-      //这里只有当socket变化的时候才执行
-      useEffect(() => {
-        // 监听连接建立事件
-        socket.onopen = () => {
-          console.log('WebSocket 连接已建立');
-          // 可以在连接建立时发送一些初始化信息
-          var auth = "admin";
-          if(isInterviewer === false)
-          auth = "user";
-          init(roomId, uid, username, auth);
-          //socket.send('Hello Server');
-        };
-      
-        // 监听消息接收事件
-        socket.onmessage = (event) => {
-          const receivedData = JSON.parse(event.data);
-          setReceivedMessage(receivedData); // 更新状态
-        };
-      
-        // 监听连接关闭事件
-        socket.onclose = (event) => {
-          console.log('WebSocket 连接已关闭:', event);
-        };
-      
-        // 在组件卸载时关闭 WebSocket 连接
-        return () => {
-          socket.close();
-        };
-
-      },[socket])
-
       //这里处理强制退出
       useEffect(() => {
         if(forceOut === true)
@@ -119,13 +106,19 @@ const SideBar = forwardRef(
 
       //通过后端实时更新用户列表
       const updateUsers = (usersData) => {
-        const updatedUsers = usersData.map((user, index) => ({
-          id: (index + 1).toString(),
-          uid: user.uuid,
-          username: user.username,
-          auth: user.auth,
-        }));
-        setUsers(updatedUsers);
+        if(Array.isArray(usersData))
+        {
+          const updatedUsers = usersData.map((user, index) => {
+            const { uuid, username, auth } = user; // 使用对象解构获取每个用户对象的属性
+            return {
+            id: (index + 1).toString(),
+            uid: uuid,
+            username: username,
+            auth: auth,
+            }
+          });
+          setUsers(updatedUsers);
+        }
       }
       
       //传递JSON文件给后端
