@@ -10,6 +10,7 @@ const SideBar = forwardRef(
       const [displayContent,setDisplayContent]= useState('chat')
       const [forceShut, setForceShut] = useState(false)
       const [forceOut, setForceOut] = useState(false)
+      const [username, setUsername] = useState('')
 
       //交互部分
       const [message, setMessage] = useState('');
@@ -18,44 +19,15 @@ const SideBar = forwardRef(
 
       //前后端socket的交互
       useEffect(() => {
-        // 创建 WebSocket 连接
-        const newSocket = new WebSocket('ws://localhost:8888/ws');
-      
-        // 监听连接建立事件
-        newSocket.onopen = () => {
-          console.log('WebSocket 连接已建立');
-          // 可以在连接建立时发送一些初始化信息
-          var username = getRandomWord();
-          var auth = "admin";
-          if(isInterviewer === false)
-          auth = "user";
-          init(roomId, uid, username, auth);
-          //newSocket.send('Hello Server');
-        };
-      
-        // 监听消息接收事件
-        newSocket.onmessage = (event) => {
-          const receivedData = JSON.parse(event.data);
-          setReceivedMessage(receivedData); // 更新状态
-        };
-      
-        // 监听连接关闭事件
-        newSocket.onclose = (event) => {
-          console.log('WebSocket 连接已关闭:', event);
-        };
-      
-        // 存储 WebSocket 连接到组件状态中
-        setSocket(newSocket);
-      
-        // 在组件卸载时关闭 WebSocket 连接
-        return () => {
-          newSocket.close();
-        };
+        var newUsername = getRandomWord();
+        setUsername(newUsername);
+        console.log(username,uid);
       }, []);
       
 
       //这里处理的是接受消息的处理逻辑
       useEffect(() => {
+        console.log(username,uid);
         const messageType = receivedMessage.type;
         switch(messageType)
         {
@@ -91,6 +63,50 @@ const SideBar = forwardRef(
           //这里接强制静音的接口
         }
       },[forceShut])
+
+      //这里只有当username变化的时候才执行
+      useEffect(() => {
+  
+        // 创建 WebSocket 连接
+        const newSocket = new WebSocket('ws://localhost:8888/ws');
+
+        console.log(username);
+        
+        // 存储 WebSocket 连接到组件状态中
+        setSocket(newSocket);
+
+      },[username])
+
+      //这里只有当socket变化的时候才执行
+      useEffect(() => {
+        // 监听连接建立事件
+        socket.onopen = () => {
+          console.log('WebSocket 连接已建立');
+          // 可以在连接建立时发送一些初始化信息
+          var auth = "admin";
+          if(isInterviewer === false)
+          auth = "user";
+          init(roomId, uid, username, auth);
+          //socket.send('Hello Server');
+        };
+      
+        // 监听消息接收事件
+        socket.onmessage = (event) => {
+          const receivedData = JSON.parse(event.data);
+          setReceivedMessage(receivedData); // 更新状态
+        };
+      
+        // 监听连接关闭事件
+        socket.onclose = (event) => {
+          console.log('WebSocket 连接已关闭:', event);
+        };
+      
+        // 在组件卸载时关闭 WebSocket 连接
+        return () => {
+          socket.close();
+        };
+
+      })
 
       //这里处理强制退出
       useEffect(() => {
