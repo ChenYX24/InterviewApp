@@ -104,6 +104,7 @@ const Room = () => {
         uid={userid}
         isInterviewer={isInterviewer}
         roomId={roomId}
+        ref={videoConferenceRef}
       />
       </div>
     </div>
