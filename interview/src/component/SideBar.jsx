@@ -71,7 +71,7 @@ const SideBar = forwardRef(
         const newSocket = new WebSocket('ws://localhost:8888/ws');
 
         console.log(username);
-        
+
         // 存储 WebSocket 连接到组件状态中
         setSocket(newSocket);
 
@@ -106,7 +106,7 @@ const SideBar = forwardRef(
           socket.close();
         };
 
-      })
+      },[socket])
 
       //这里处理强制退出
       useEffect(() => {
