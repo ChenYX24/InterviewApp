@@ -4,6 +4,9 @@ import { useParams,useLocation } from 'react-router-dom'
 import VideoConference from '../component/VideoConference'
 import SideBar from '../component/SideBar'
 import CameraToggle from '../component/CameraToggle'
+import AudioToggle from '../component/AudioToggle'
+import VolumeControl from '../component/VolumeControl'
+
 const APP_ID = '91ed5671b5224d52915716656792d2f6' // 替换为您的 Agora App ID
 const TOKEN = null // 替换为您的 Agora Token
 
@@ -56,8 +59,9 @@ const Room = () => {
           },
         }
       )
+      console.log(Tracks)
       setLocalTracks(Tracks)
-      await agoraClient.publish(Tracks)
+      await agoraClient.publish([Tracks[0],Tracks[1]])
     } catch (error) {
       console.error('Error accessing microphone and camera', error)
     }
@@ -65,6 +69,7 @@ const Room = () => {
 
   //用户进入
   const handleUserPublished = async (user, mediaType, agoraClient) => {
+    console.log(11111)
     await agoraClient.subscribe(user, mediaType)
     if (mediaType === 'audio' || mediaType === 'video') {
       if (videoConferenceRef.current) {
@@ -97,9 +102,15 @@ const Room = () => {
         setLastLeftUserId={setLastLeftUserId}
         ref={videoConferenceRef}
       />
-      <CameraToggle>
+      <CameraToggle
         localTracks={localTracks}
-      </CameraToggle>
+      />
+      <AudioToggle
+        localTracks={localTracks}
+      />
+      {/* <VolumeControl
+        localTracks={localTracks}
+      /> */}
       <SideBar 
         uid={userid}
         isInterviewer={isInterviewer}
