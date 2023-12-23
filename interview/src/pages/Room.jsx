@@ -20,6 +20,7 @@ const Room = () => {
   const videoConferenceRef = useRef(null)
   const [lastLeftUserId, setLastLeftUserId] = useState(null)
   const [isInterviewer, setIsInterviewer] = useState(null)
+  const [forceShut, setForceShut] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -102,23 +103,24 @@ const Room = () => {
         ref={videoConferenceRef}
       />
 
-<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',marginBottom: '20px'}}>
-  <div style={{ marginRight: '10px' }}>
-    <CameraToggle
-      localTracks={localTracks}
-    />
-  </div>
-  <div style={{ marginRight: '10px' }}>
-    <AudioToggle
-      localTracks={localTracks}
-    />
-  </div>
-  <div>
-    <ScreenShareToggle
-      agoraClient={client}
-    />
-  </div>
-</div>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',marginBottom: '20px'}}>
+      <div style={{ marginRight: '10px' }}>
+        <CameraToggle
+          localTracks={localTracks}
+        />
+      </div>
+      <div style={{ marginRight: '10px' }}>
+        <AudioToggle
+          localTracks={localTracks}
+          forceShut={forceShut}
+        />
+      </div>
+      <div>
+        <ScreenShareToggle
+          agoraClient={client}
+        />
+      </div>
+    </div>
 
 
 
@@ -130,6 +132,8 @@ const Room = () => {
         isInterviewer={isInterviewer}
         roomId={roomId}
         ref={videoConferenceRef}
+        forceShut={forceShut} 
+        setForceShut={setForceShut}
       />
       </div>
     </div>

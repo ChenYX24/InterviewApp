@@ -45,7 +45,9 @@ const CameraToggle = forwardRef(
           </span>
         )}
       </button>
-      {isCameraOn ? '关闭音频' : '开启音频'}
+      <div style={{ marginTop: '5px',fontSize: '12px' }}>
+      {isCameraOn ? '关闭摄像头' : '开启摄像头'}
+      </div>
     </div>
   );
 });

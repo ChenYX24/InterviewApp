@@ -3,13 +3,13 @@ import SideBarCss from '../css/SideBar.module.css'
 
 const SideBar = forwardRef(
     (
-      { uid, isInterviewer, roomId },
+      { uid, isInterviewer, roomId,forceShut, setForceShut },
       ref
     ) => {
       const [chats, setChats] = useState([])
       const [users, setUsers] = useState([])
       const [displayContent,setDisplayContent]= useState('chat')
-      const [forceShut, setForceShut] = useState(false)
+      // const [forceShut, setForceShut] = useState(false)
       const [forceOut, setForceOut] = useState(false)
       const [username, setUsername] = useState('')
 
@@ -89,20 +89,12 @@ const SideBar = forwardRef(
 
       // 这里处理强制静音
       useEffect(() => {
-        const handleForceShut = async () => {
-          if (socket) {
-            // 在这里通过 WebSocket 发送消息告知服务器要执行强制静音的操作，并传递 forceShut 的值
-            socket.send(JSON.stringify({
-              type: 'force_shut',
-              forceShut,
-              // 可以根据需要发送其他相关信息
-            }));
-          }
-        };
+        if(forceShut === true)
+        {
+          console.log('已经被静音');
+        }
+      },[forceShut])
 
-        // 调用处理强制静音的函数
-        handleForceShut();
-      }, [forceShut, socket]);
 
       //这里处理强制退出
       useEffect(() => {

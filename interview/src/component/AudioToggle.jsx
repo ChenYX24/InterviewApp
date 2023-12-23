@@ -1,12 +1,12 @@
-// AudioToggle.js
+// AudioToggle.jsx
 import React, { forwardRef, useEffect, useState } from 'react';
 
-const AudioToggle = forwardRef(({ localTracks }) => {
+const AudioToggle = forwardRef(({ localTracks, forceShut}) => {
   const [isAudioOn, setIsAudioOn] = useState(false);
-  const [allowAudioOn, setallowAudioOn] = useState(true);
+  // const [allowAudioOn, setallowAudioOn] = useState(true);
   const toggleAudio = async () => {
-    // 如果 allowchengAudioOn 为 false，直接将 isAudioOn 设置为 false
-    if (!allowAudioOn) {
+    // 如果 forceShut 为 true, isAudioOn 设置为 false
+    if (forceShut) {
       setIsAudioOn(false);
       return;
     }
@@ -31,6 +31,14 @@ const AudioToggle = forwardRef(({ localTracks }) => {
     // 调用状态变化后的逻辑
     updateMutedState();
   }, [isAudioOn, localTracks]);
+
+  useEffect(() => {
+    if (forceShut) {
+      setIsAudioOn(false);
+      return;
+    }
+  }, [forceShut]);
+
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
