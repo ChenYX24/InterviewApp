@@ -6,7 +6,7 @@ import SideBar from '../component/SideBar'
 import CameraToggle from '../component/CameraToggle'
 import AudioToggle from '../component/AudioToggle'
 import VolumeControl from '../component/VolumeControl'
-
+import ScreenShareToggle from '../component/ScreenShareToggle'
 const APP_ID = '91ed5671b5224d52915716656792d2f6' // 替换为您的 Agora App ID
 const TOKEN = null // 替换为您的 Agora Token
 
@@ -20,7 +20,6 @@ const Room = () => {
   const videoConferenceRef = useRef(null)
   const [lastLeftUserId, setLastLeftUserId] = useState(null)
   const [isInterviewer, setIsInterviewer] = useState(null)
-
   const location = useLocation();
 
   useEffect(() => {
@@ -102,12 +101,27 @@ const Room = () => {
         setLastLeftUserId={setLastLeftUserId}
         ref={videoConferenceRef}
       />
-      <CameraToggle
-        localTracks={localTracks}
-      />
-      <AudioToggle
-        localTracks={localTracks}
-      />
+
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',marginBottom: '20px'}}>
+  <div style={{ marginRight: '10px' }}>
+    <CameraToggle
+      localTracks={localTracks}
+    />
+  </div>
+  <div style={{ marginRight: '10px' }}>
+    <AudioToggle
+      localTracks={localTracks}
+    />
+  </div>
+  <div>
+    <ScreenShareToggle
+      agoraClient={client}
+    />
+  </div>
+</div>
+
+
+
       {/* <VolumeControl
         localTracks={localTracks}
       /> */}

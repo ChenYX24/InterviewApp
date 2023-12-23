@@ -22,7 +22,7 @@ const SideBar = forwardRef(
         const newUsername = getRandomWord();
         setUsername(newUsername);
         // 创建 WebSocket 连接
-        const newSocket = new WebSocket('ws://localhost:8888/ws');
+        const newSocket = new WebSocket('wss://ws.scutbot.icu/ws');
         // 存储 WebSocket 连接到组件状态中
         setSocket(newSocket);
         // 在组件卸载时关闭 WebSocket 连接
@@ -87,13 +87,22 @@ const SideBar = forwardRef(
         }
       }, [receivedMessage])
 
-      //这里处理强制静音
+      // 这里处理强制静音
       useEffect(() => {
-        if(forceShut === true)
-        {
-          //这里接强制静音的接口
-        }
-      },[forceShut])
+        const handleForceShut = async () => {
+          if (socket) {
+            // 在这里通过 WebSocket 发送消息告知服务器要执行强制静音的操作，并传递 forceShut 的值
+            socket.send(JSON.stringify({
+              type: 'force_shut',
+              forceShut,
+              // 可以根据需要发送其他相关信息
+            }));
+          }
+        };
+
+        // 调用处理强制静音的函数
+        handleForceShut();
+      }, [forceShut, socket]);
 
       //这里处理强制退出
       useEffect(() => {

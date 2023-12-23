@@ -3,8 +3,13 @@ import React, { forwardRef, useEffect, useState } from 'react';
 
 const AudioToggle = forwardRef(({ localTracks }) => {
   const [isAudioOn, setIsAudioOn] = useState(false);
-
+  const [allowAudioOn, setallowAudioOn] = useState(true);
   const toggleAudio = async () => {
+    // 如果 allowchengAudioOn 为 false，直接将 isAudioOn 设置为 false
+    if (!allowAudioOn) {
+      setIsAudioOn(false);
+      return;
+    }
     // 切换音频状态
     setIsAudioOn((prev) => !prev);
   };
@@ -28,18 +33,15 @@ const AudioToggle = forwardRef(({ localTracks }) => {
   }, [isAudioOn, localTracks]);
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <button onClick={toggleAudio}>
-        {isAudioOn ? (
-          <span role="img" aria-label="Audio On">
-            🔊
-          </span>
-        ) : (
-          <span role="img" aria-label="Audio Off">
-            🔇
-          </span>
-        )}
+        <span role="img" aria-label="Audio On">
+        {isAudioOn ? '🔊' : '🔇'}
+        </span>
       </button>
+      <div style={{ marginTop: '5px',fontSize: '12px' }}>
+      {isAudioOn ? '关闭音频' : '开启音频'}
+      </div>
     </div>
   );
 });
