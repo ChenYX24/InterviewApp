@@ -72,6 +72,7 @@ const SideBar = forwardRef(
             if(isInterviewer === false)
             {
               setForceOut(true);
+              updateUsers(usersData);
             }
             break;
           case "shut_down":
