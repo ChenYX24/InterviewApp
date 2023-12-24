@@ -125,7 +125,6 @@ const Room = () => {
     </div>
     </div>
       <SideBar 
-        uid={userid}
         isInterviewer={isInterviewer}
         roomId={roomId}
         ref={videoConferenceRef}

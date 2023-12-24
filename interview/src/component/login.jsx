@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import LoginCCss from "../css/LoginC.module.css"
@@ -8,11 +7,11 @@ const Login = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const handleLogin = async () => {
     console.log('Login clicked');
     console.log('Email:', email);
     console.log('Password:', password);
+    
     const instance = axios.create({
         baseURL:"https://ws.scutbot.icu/api"
     })
@@ -22,8 +21,8 @@ const Login = () => {
         if(response.data.code == 200){
             console.log("登陆成功",response.data.data);
             localStorage.setItem("uuid", response.data.data.uuid)
-            localStorage.setItem("uuid", response.data.data.username)
-            navigate(`/home`);
+            localStorage.setItem("username", response.data.data.username)
+            navigate("/home")
         }else{
             console.log("登陆失败");
             console.log(response.data);
