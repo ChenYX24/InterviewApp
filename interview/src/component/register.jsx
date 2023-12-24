@@ -11,14 +11,15 @@ const Register = () => {
     console.log('Email:', email);
     console.log('Password:', password);
     const instance = axios.create({
-        baseURL:"https://oauth.scutbot.icu/"
+        baseURL:"https://ws.scutbot.icu/api"
     })
     instance.post("/register", {name:username,email: email, passwd: password})
     .then((response) =>{
         console.log(response);
         if(response.data.code == 200){
-            console.log("注册成功，保存uuid", response.data.data);
-            localStorage.setItem("uuid", response.data.data)
+            console.log("注册成功", response.data.data);
+            localStorage.setItem("uuid", response.data.data.uuid)
+            localStorage.setItem("uuid", response.data.data.username)
         }else{
             console.log("注册失败");
             console.log(response.data);
