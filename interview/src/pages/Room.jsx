@@ -128,7 +128,6 @@ const Room = () => {
         localTracks={localTracks}
       /> */}
       <SideBar 
-        uid={userid}
         isInterviewer={isInterviewer}
         roomId={roomId}
         ref={videoConferenceRef}

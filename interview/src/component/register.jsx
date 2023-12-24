@@ -1,11 +1,11 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-
+  const navigate = useNavigate();
   const handleRegister = async () => {
     console.log('Register clicked');
     console.log('Email:', email);
@@ -19,7 +19,8 @@ const Register = () => {
         if(response.data.code == 200){
             console.log("注册成功", response.data.data);
             localStorage.setItem("uuid", response.data.data.uuid)
-            localStorage.setItem("uuid", response.data.data.username)
+            localStorage.setItem("username", response.data.data.username)
+            navigate("/home")
         }else{
             console.log("注册失败");
             console.log(response.data);

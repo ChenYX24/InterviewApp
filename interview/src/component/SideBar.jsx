@@ -3,7 +3,7 @@ import SideBarCss from '../css/SideBar.module.css'
 
 const SideBar = forwardRef(
     (
-      { uid, isInterviewer, roomId,forceShut, setForceShut },
+      { isInterviewer, roomId,forceShut, setForceShut },
       ref
     ) => {
       const [chats, setChats] = useState([])
@@ -11,6 +11,7 @@ const SideBar = forwardRef(
       const [displayContent,setDisplayContent]= useState('chat')
       // const [forceShut, setForceShut] = useState(false)
       const [forceOut, setForceOut] = useState(false)
+      const [uid, setUid] = useState('')
       const [username, setUsername] = useState('')
 
       //交互部分
@@ -19,8 +20,8 @@ const SideBar = forwardRef(
       const [socket, setSocket] = useState(null);
 
       useEffect(() => {
-        const newUsername = getRandomWord();
-        setUsername(newUsername);
+        setUid(localStorage.getItem("uuid"));
+        setUsername(localStorage.getItem("username"));
         // 创建 WebSocket 连接
         const newSocket = new WebSocket('wss://ws.scutbot.icu/ws');
         // 存储 WebSocket 连接到组件状态中
