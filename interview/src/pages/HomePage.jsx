@@ -1,7 +1,7 @@
 import { Box, Button, Container, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import InterviewModal from '../component/InterviewModal'
-
+import HomeCss from "../css/HomeCss.module.css"
 function HomePage() {
   const [showModal, setShowModal] = useState(false)
   const [modalType, setModalType] = useState('')
@@ -16,12 +16,14 @@ function HomePage() {
   }
 
   const handleConfirm = (roomNumber, isInterviewer) => {
-    // alert(`房间号: ${roomNumber}, 是否为面试官: ${isInterviewer ? '是' : '否'}`)
+    alert(`房间号: ${roomNumber}, 是否为面试官: ${isInterviewer ? '是' : '否'}`)
     closeModal()
   }
 
   return (
-    <Container maxWidth="sm">
+    <div className={HomeCss.bg}>
+      <div className={HomeCss.content}>
+      <Container maxWidth="sm">
       <Box sx={{ my: 4, textAlign: 'center' }}>
         <Typography variant="h4" component="h1" gutterBottom>
           欢迎来到面试应用
@@ -53,6 +55,9 @@ function HomePage() {
         />
       )}
     </Container>
+      </div>
+    </div>
+
   )
 }
 

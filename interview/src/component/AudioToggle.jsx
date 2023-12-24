@@ -1,5 +1,7 @@
 // AudioToggle.jsx
 import React, { forwardRef, useEffect, useState } from 'react';
+import AudioOn from "../resource/voice1.png"
+import AudioOff from "../resource/voice2.png"
 
 const AudioToggle = forwardRef(({ localTracks, forceShut}) => {
   const [isAudioOn, setIsAudioOn] = useState(false);
@@ -41,16 +43,9 @@ const AudioToggle = forwardRef(({ localTracks, forceShut}) => {
 
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <button onClick={toggleAudio}>
-        <span role="img" aria-label="Audio On">
-        {isAudioOn ? '🔊' : '🔇'}
-        </span>
-      </button>
-      <div style={{ marginTop: '5px',fontSize: '12px' }}>
-      {isAudioOn ? '关闭音频' : '开启音频'}
+      <div style={{backgroundColor: isAudioOn ? "rgba(0, 157, 255, 1)" : "rgba(214, 214, 214, 1)",height:"3vw",width:"5vw",borderRadius:"30px",display:"flex",alignItems: "center",justifyContent: "center",cursor:"pointer",flexDirection:"column"}} onClick={toggleAudio}>
+        {isAudioOn ? <img style={{height:"2vw",width:"2vw"}} src={AudioOn} alt="" />:<img style={{height:"2vw",width:"2vw"}} src={AudioOff} alt="" />}
       </div>
-    </div>
   );
 });
 

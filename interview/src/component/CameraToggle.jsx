@@ -1,5 +1,8 @@
 // CameraToggle.js
 import React, { forwardRef, useEffect, useState } from 'react'
+import cameraOn from "../resource/camera1.png"
+import cameraOff from "../resource/camera2.png"
+
 
 const CameraToggle = forwardRef( 
   (
@@ -33,22 +36,13 @@ const CameraToggle = forwardRef(
 
 
   return (
-    <div>
-      <button onClick={toggleCamera}>
+      <div style={{backgroundColor: isCameraOn ? "rgba(0, 157, 255, 1)" : "rgba(214, 214, 214, 1)",height:"3vw",width:"5vw",borderRadius:"30px",display:"flex",alignItems: "center",justifyContent: "center",cursor:"pointer",flexDirection:"column"}} onClick={toggleCamera}>
         {isCameraOn ? (
-          <span role="img" aria-label="Camera On">
-            🎥
-          </span>
+            <img style={{height:"2vw",width:"2vw"}} src={cameraOn} alt="" />
         ) : (
-          <span role="img" aria-label="Camera Off">
-            🚫
-          </span>
+            <img style={{height:"2vw",width:"2vw"}} src={cameraOff} alt="" />
         )}
-      </button>
-      <div style={{ marginTop: '5px',fontSize: '12px' }}>
-      {isCameraOn ? '关闭摄像头' : '开启摄像头'}
       </div>
-    </div>
   );
 });
 

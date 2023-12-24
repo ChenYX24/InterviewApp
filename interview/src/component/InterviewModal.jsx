@@ -70,6 +70,7 @@ function InterviewModal({ title, placeholder, onClose, onConfirm }) {
                 onChange={(e) => setIsInterviewer(e.target.checked)}
               />
             }
+            style={{color:'black'}}
             label="作为面试官加入"
           />
         )}

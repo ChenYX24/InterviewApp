@@ -2,7 +2,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import LoginCCss from "../css/LoginC.module.css"
+import { useNavigate } from 'react-router-dom'
+
 const Login = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,6 +23,7 @@ const Login = () => {
             console.log("登陆成功",response.data.data);
             localStorage.setItem("uuid", response.data.data.uuid)
             localStorage.setItem("uuid", response.data.data.username)
+            navigate(`/home`);
         }else{
             console.log("登陆失败");
             console.log(response.data);

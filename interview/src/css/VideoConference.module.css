@@ -1,18 +1,26 @@
 /* VideoConference.module.css */
 .video_container {
   display: flex;
-  width: 80vw;
+  width: 60vw;
   height: 80vh;
-  margin: auto;
+  margin-left: 5vw;
 }
 
 .main_video_area {
-  flex: 3;
-  padding: 10px;
+  flex: 5;
+  border-radius: 30px;
+  box-shadow: 5px 5px 10px;
+  overflow: hidden;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
 }
-
+.block{
+  flex:0.5
+}
 .secondary_video_area {
-  flex: 1;
+  flex: 2;
   padding: 10px;
   overflow-y: auto;
   height: 100%;
@@ -25,8 +33,12 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  
 }
 .secondary_video_player {
   height: 25%;
   margin-bottom: 5%;
+  border-radius: 30px;
+  box-shadow: 3px 4px 9px;
+  overflow: hidden;
 }

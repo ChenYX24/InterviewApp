@@ -1,7 +1,8 @@
 // ScreenShareToggle.js
 import React, { forwardRef, useEffect, useState } from 'react';
 import AgoraRTC from 'agora-rtc-sdk-ng';
-
+import ScreenOn from "../resource/share1.png"
+import ScreenOff from "../resource/share1.png"
 const ScreenShareToggle = forwardRef(({ agoraClient }, ref) => {
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [localScreenTracks, setLocalScreenTracks] = useState(null);
@@ -32,14 +33,10 @@ const ScreenShareToggle = forwardRef(({ agoraClient }, ref) => {
   }, [isScreenSharing, agoraClient, localScreenTracks]);
 
   return (
-    <div>
-      <button onClick={toggleScreenShare} ref={ref}>
-        {isScreenSharing ? '🖥️' : '🚫'}
-      </button>
-      <div style={{ marginTop: '5px',fontSize: '12px' }}>
-        {isScreenSharing ? '关闭屏幕共享' : '开启屏幕共享'}
-      </div>
-    </div>
+    <div style={{backgroundColor: isScreenSharing ? "rgba(0, 157, 255, 1)" : "rgba(214, 214, 214, 1)",height:"3vw",width:"5vw",borderRadius:"30px",display:"flex",alignItems: "center",justifyContent: "center",cursor:"pointer",flexDirection:"column"}} onClick={toggleScreenShare}>
+    {isScreenSharing ? <img style={{height:"2vw",width:"2vw"}} src={ScreenOn} alt="" />:<img style={{height:"2vw",width:"2vw"}} src={ScreenOff} alt="" />}
+  </div>
+
   );  
 });
 

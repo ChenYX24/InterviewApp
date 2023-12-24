@@ -7,6 +7,7 @@ import CameraToggle from '../component/CameraToggle'
 import AudioToggle from '../component/AudioToggle'
 import VolumeControl from '../component/VolumeControl'
 import ScreenShareToggle from '../component/ScreenShareToggle'
+import RoomCss from "../css/RoomCss.module.css"
 const APP_ID = '91ed5671b5224d52915716656792d2f6' // 替换为您的 Agora App ID
 const TOKEN = null // 替换为您的 Agora Token
 
@@ -94,6 +95,8 @@ const Room = () => {
   return (
     <div>
       <div>
+      <div className={RoomCss.box2}>
+      <div className={RoomCss.box}>
       <VideoConference 
         localTracks={localTracks}
         remoteUsers={remoteUsers}
@@ -102,8 +105,7 @@ const Room = () => {
         setLastLeftUserId={setLastLeftUserId}
         ref={videoConferenceRef}
       />
-
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',marginBottom: '20px'}}>
+      <div className={RoomCss.control} >
       <div style={{ marginRight: '10px' }}>
         <CameraToggle
           localTracks={localTracks}
@@ -121,12 +123,7 @@ const Room = () => {
         />
       </div>
     </div>
-
-
-
-      {/* <VolumeControl
-        localTracks={localTracks}
-      /> */}
+    </div>
       <SideBar 
         uid={userid}
         isInterviewer={isInterviewer}
@@ -135,6 +132,17 @@ const Room = () => {
         forceShut={forceShut} 
         setForceShut={setForceShut}
       />
+      </div>
+
+
+    
+
+
+
+      {/* <VolumeControl
+        localTracks={localTracks}
+      /> */}
+
       </div>
     </div>
 

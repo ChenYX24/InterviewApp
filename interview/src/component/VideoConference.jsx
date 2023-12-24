@@ -91,6 +91,7 @@ const VideoConference = forwardRef(
             className={VideoConferenceCss.video_player}
             id={`user-${mainVideoUserId || uid}`}></div>
         </div>
+        <div className={VideoConferenceCss.block}></div>
         <div className={VideoConferenceCss.secondary_video_area}>
           {renderOrder.map((userId) => {
             if (userId === mainVideoUserId)
