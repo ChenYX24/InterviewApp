@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import LoginCCss from "../css/LoginC.module.css"
+
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,11 +32,11 @@ const Register = () => {
     })
   };
   return (
-    <div>
-      <h2>Register</h2>
-      <form>
+    <div  className={LoginCCss.loginContainer}>
+      <form className={LoginCCss.loginForm}>
         <label>username:
           <input
+          className={LoginCCss.inputField}
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -43,6 +45,7 @@ const Register = () => {
         <br />
         <label>Email:
           <input
+          className={LoginCCss.inputField}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -51,13 +54,14 @@ const Register = () => {
         <br />
         <label>Password:
           <input
+          className={LoginCCss.inputField}
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
         <br />
-        <button type="button" onClick={handleRegister}>
+        <button className={LoginCCss.loginButton} type="button" onClick={handleRegister}>
           Register
         </button>
       </form>

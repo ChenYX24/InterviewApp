@@ -1,0 +1,61 @@
+.loginForm {
+    background: rgba(255, 255, 255, 0.15);  
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px; /* 或者根据您的设计调整 */
+  }
+
+  .inputField{
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #fff; /* 或者其他您希望的颜色 */
+    color: #fff; /* 字体颜色 */
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .inputField:focus {
+    outline: none;
+  }
+  
+  .loginButton {
+    background: #fff;
+    border: none;
+    border-radius: 20px;
+    color: #000;
+    cursor: pointer;
+    padding: 10px 20px;
+    text-transform: uppercase; /* 使文字大写 */
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  /* 修改标签样式 */
+  label {
+    color: #fff; /* 标签字体颜色 */
+    margin-top: 10px;
+    display: block; /* 或者您可能需要其他的显示方式 */
+  }
+  
+  /* 修改按钮样式 */
+  button {
+    background: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 0;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  /* 修改整体布局样式 */
+  .loginContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
