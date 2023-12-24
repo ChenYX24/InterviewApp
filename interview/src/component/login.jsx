@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import LoginCCss from "../css/LoginC.module.css"
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,25 +32,25 @@ const Login = () => {
     })
   };
   return (
-    <div>
-      <form>
+    <div className={LoginCCss.loginContainer}>
+      <form className={LoginCCss.loginForm}>
         <label>Email:
           <input
+          className={LoginCCss.inputField}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
-        <br />
         <label>Password:
           <input
+            className={LoginCCss.inputField}
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <br />
-        <button type="button" onClick={handleLogin}>
+        <button className={LoginCCss.loginButton} type="button" onClick={handleLogin}>
           Login
         </button>
       </form>
