@@ -1,15 +1,17 @@
-@media (min-width:768px) {
+@media (max-width:768px) {
     .box{
         display: flex;
         flex-direction: column;
     }
     .box2{
         display: flex;
+        flex-direction: column;
     }
     .control{
         position: relative;
-        left: 5vw;
-        top:5vh;
+        left: 50%;
+        transform: translateX(-50%);
+        top:-15vh;
         height: 10vh;
         width: 40vw;
         opacity: 1;
@@ -23,15 +25,20 @@
         -moz-border-radius: 30px;
         -ms-border-radius: 30px;
         -o-border-radius: 30px;
-    }
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
 }
-@media(max-width:768px){
+}
+@media(min-width:768px){
     .box{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
     }
     .box2{
         display: flex;
+        flex-direction: column;
     }
     .control{
         position: relative;

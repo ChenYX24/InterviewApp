@@ -1,30 +1,60 @@
 /* VideoConference.module.css */
-.video_container {
-  display: flex;
-  width: 60vw;
-  height: 80vh;
-  margin-left: 5vw;
+@media (max-width: 768px) {
+  .video_container {
+    display: flex;
+    width: 90vw;
+    height: 50vh;
+    margin-left: 5vw;
+  }
+  .main_video_area {
+    flex: 5;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px;
+    overflow: hidden;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    height: 50%;
+  }
+  .secondary_video_area {
+    flex: 2;
+    padding: 10px;
+    overflow-y: auto;
+    height: 50%;
+  }
+}
+@media (min-width: 768px) {
+  .video_container {
+    display: flex;
+    width: 60vw;
+    height: 80vh;
+    margin-left: 5vw;
+  }
+  .main_video_area {
+    flex: 5;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px;
+    overflow: hidden;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+  }
+  .secondary_video_area {
+    flex: 2;
+    padding: 10px;
+    overflow-y: auto;
+    height: 100%;
+  }
 }
 
-.main_video_area {
-  flex: 5;
-  border-radius: 30px;
-  box-shadow: 5px 5px 10px;
-  overflow: hidden;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  -ms-border-radius: 30px;
-  -o-border-radius: 30px;
-}
+
+
 .block{
   flex:0.5
 }
-.secondary_video_area {
-  flex: 2;
-  padding: 10px;
-  overflow-y: auto;
-  height: 100%;
-}
+
 
 .video_player {
   margin-bottom: 10px;
@@ -33,7 +63,6 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  
 }
 .secondary_video_player {
   height: 25%;
