@@ -61,6 +61,7 @@ const SideBar = forwardRef(
       //这里处理的是接受消息的处理逻辑
       useEffect(() => {
         const messageType = receivedMessage.type;
+        console.log(receivedMessage)
         switch(messageType)
         {
           case "send_msg":
@@ -70,16 +71,10 @@ const SideBar = forwardRef(
             handleChatSend(isFromMe,inputValue,send);
             break;
           case "get_out":
-            if(isInterviewer === false)
-            {
-              setForceOut(true);
-            }
+            setForceOut(true);
             break;
           case "shut_down":
-            if(isInterviewer === false)
-            {
-              setForceShut(true);
-            }
+            setForceShut(!forceShut);
             break;
           case "mapping":
             var usersData = receivedMessage.data.usermap;
@@ -93,6 +88,10 @@ const SideBar = forwardRef(
         if(forceShut === true)
         {
           console.log('已经被静音');
+        }
+        else
+        {
+          console.log('解除禁音')
         }
       },[forceShut])
 
