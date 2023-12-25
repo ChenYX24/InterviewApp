@@ -1,6 +1,6 @@
 import AgoraRTC from 'agora-rtc-sdk-ng'
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams,useLocation } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import VideoConference from '../component/VideoConference'
 import SideBar from '../component/SideBar'
 import CameraToggle from '../component/CameraToggle'
@@ -62,7 +62,7 @@ const Room = () => {
       )
       console.log(Tracks)
       setLocalTracks(Tracks)
-      await agoraClient.publish([Tracks[0],Tracks[1]])
+      await agoraClient.publish([Tracks[0], Tracks[1]])
     } catch (error) {
       console.error('Error accessing microphone and camera', error)
     }
@@ -95,50 +95,51 @@ const Room = () => {
   return (
     <div>
       <div>
-      <div className={RoomCss.box2}>
-      <div className={RoomCss.box}>
-      <VideoConference 
-        localTracks={localTracks}
-        remoteUsers={remoteUsers}
-        uid={userid}
-        lastLeftUserId={lastLeftUserId}
-        setLastLeftUserId={setLastLeftUserId}
-        ref={videoConferenceRef}
-      />
-      <div className={RoomCss.control} >
-      <div style={{ marginRight: '10px' }}>
-        <CameraToggle
-          localTracks={localTracks}
-        />
-      </div>
-      <div style={{ marginRight: '10px' }}>
-        <AudioToggle
-          localTracks={localTracks}
-          forceShut={forceShut}
-        />
-      </div>
-      <div>
-        <ScreenShareToggle
-          agoraClient={client}
-        />
-      </div>
-    </div>
-    </div>
-      <SideBar 
-        isInterviewer={isInterviewer}
-        roomId={roomId}
-        ref={videoConferenceRef}
-        forceShut={forceShut} 
-        setForceShut={setForceShut}
-      />
-      </div>
+        <div className={RoomCss.box}>
+          <div className={RoomCss.box2}>
+            <VideoConference
+              localTracks={localTracks}
+              remoteUsers={remoteUsers}
+              uid={userid}
+              lastLeftUserId={lastLeftUserId}
+              setLastLeftUserId={setLastLeftUserId}
+              ref={videoConferenceRef}
+            />
+            <div className={RoomCss.control} >
+              <div style={{ marginRight: '10px' }}>
+                <CameraToggle
+                  localTracks={localTracks}
+                />
+              </div>
+              <div style={{ marginRight: '10px' }}>
+                <AudioToggle
+                  localTracks={localTracks}
+                  forceShut={forceShut}
+                />
+              </div>
+              <div>
+                <ScreenShareToggle
+                  agoraClient={client}
+                />
+              </div>
+            </div>
+          </div>
+          <SideBar
+            uid={userid}
+            isInterviewer={isInterviewer}
+            roomId={roomId}
+            ref={videoConferenceRef}
+            forceShut={forceShut}
+            setForceShut={setForceShut}
+          />
+        </div>
 
 
-    
 
 
 
-      {/* <VolumeControl
+
+        {/* <VolumeControl
         localTracks={localTracks}
       /> */}
 

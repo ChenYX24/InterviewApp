@@ -17,10 +17,10 @@ function LoginPage() {
       <div className={LoginCss.content}>
         <div className={LoginCss.bar}>
           <div className={`${LoginCss.dot} ${selected === 'login' ? LoginCss.selected : ''}`} onClick={() => handleSelect('login')}>
-            <span className={`${selected === 'login' ? LoginCss.selected : ''}`}>Login</span>
+            <span className={`${selected === 'login' ? LoginCss.selected : ''}`} onClick={() => handleSelect('login')}>Login</span>
           </div>
           <div className={`${LoginCss.dot} ${selected === 'register' ? LoginCss.selected : ''}`} onClick={() => handleSelect('register')}>
-            <span className={`${selected === 'register' ? LoginCss.selected : ''}`}>Register</span>
+            <span className={`${selected === 'register' ? LoginCss.selected : ''}`} onClick={() => handleSelect('register')}>Register</span>
           </div>
         </div>
         <div className={LoginCss.lg}>

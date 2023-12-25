@@ -16,7 +16,7 @@ function HomePage() {
   }
 
   const handleConfirm = (roomNumber, isInterviewer) => {
-    alert(`房间号: ${roomNumber}, 是否为面试官: ${isInterviewer ? '是' : '否'}`)
+    // alert(`房间号: ${roomNumber}, 是否为面试官: ${isInterviewer ? '是' : '否'}`)
     closeModal()
   }
 
