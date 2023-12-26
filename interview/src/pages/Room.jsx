@@ -120,6 +120,8 @@ const Room = () => {
               <div>
                 <ScreenShareToggle
                   agoraClient={client}
+                  localTracks={localTracks}
+                  userid={userid}
                 />
               </div>
             </div>

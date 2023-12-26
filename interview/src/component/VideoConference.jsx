@@ -89,7 +89,8 @@ const VideoConference = forwardRef(
           id={`user-container-${mainVideoUserId || uid}`}>
           <div
             className={VideoConferenceCss.video_player}
-            id={`user-${mainVideoUserId || uid}`}></div>
+            id={`user-${mainVideoUserId || uid}`}>
+          </div>
         </div>
         <div className={VideoConferenceCss.block}></div>
         <div className={VideoConferenceCss.secondary_video_area}>

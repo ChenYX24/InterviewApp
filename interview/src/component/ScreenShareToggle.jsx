@@ -3,7 +3,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import ScreenOn from "../resource/share1.png"
 import ScreenOff from "../resource/share1.png"
-const ScreenShareToggle = forwardRef(({ agoraClient }, ref) => {
+const ScreenShareToggle = forwardRef(({ agoraClient,localTracks,userid}, ref) => {
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [localScreenTracks, setLocalScreenTracks] = useState(null);
 
@@ -24,13 +24,20 @@ const ScreenShareToggle = forwardRef(({ agoraClient }, ref) => {
         // 创建本地屏幕分享轨道
         const screenTracks = await AgoraRTC.createScreenVideoTrack();
         setLocalScreenTracks(screenTracks);
+
+        screenTracks.play(`user-${userid}`)
+        localTracks[1].stop();
+        await agoraClient.unpublish([localTracks[1]]);
         await agoraClient.publish([screenTracks]);
       }
     };
-
     // 调用状态变化后的逻辑
     updateSharingState();
-  }, [isScreenSharing, agoraClient, localScreenTracks]);
+  }, [isScreenSharing]);
+
+
+
+
 
   return (
     <div style={{backgroundColor: isScreenSharing ? "rgba(0, 157, 255, 1)" : "rgba(214, 214, 214, 1)",height:"3vw",width:"5vw",borderRadius:"30px",display:"flex",alignItems: "center",justifyContent: "center",cursor:"pointer",flexDirection:"column"}} onClick={toggleScreenShare}>
