@@ -196,3 +196,13 @@
     color: white;
     cursor: pointer;
   }
+
+
+  .cancelColor {
+    background-color: red; /* 你想要的取消静音时的颜色 */
+  }
+  
+  .muteColor {
+    background-color: green; /* 你想要的静音时的颜色 */
+  }
+  

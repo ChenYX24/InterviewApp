@@ -18,6 +18,7 @@ const SideBar = forwardRef(
       const [message, setMessage] = useState('');
       const [receivedMessage, setReceivedMessage] = useState('');
       const [socket, setSocket] = useState(null);
+      const [wordShowForceShut, setWordShowForceShut] = useState(false);
 
       useEffect(() => {
         setUid(localStorage.getItem("uuid"));
@@ -101,7 +102,7 @@ const SideBar = forwardRef(
         if(forceOut === true)
         {
           //返回首页
-          window.location.href = '/';
+          window.location.href = '/home';
         }
       },[forceOut])
 
@@ -116,9 +117,11 @@ const SideBar = forwardRef(
             uid: uuid,
             username: username,
             auth: auth,
+            isShut:false,
             }
           });
           setUsers(updatedUsers);
+
         }
       }
       
@@ -163,6 +166,14 @@ const SideBar = forwardRef(
         //发送给后端同一份
         sendDataToBackEnd("send_msg", inputValue ,null);
       }
+
+      const setIsShut = (userId) => {
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user.id === userId ? { ...user, isShut: !user.isShut } : user
+          )
+        );
+      };
 
       //处理聊天记录信息（无论是本地的还是外部的）
       const handleChatSend = (isFromMe,content,send) => {
@@ -214,10 +225,18 @@ const SideBar = forwardRef(
         {displayContent === 'users' &&(
           <div className={SideBarCss.user_list}>
             <h3>用户列表</h3>
-              {users.map((user) => (
+              {users.map((user,index) => (
                 <div key={user.id} className={SideBarCss.user_row}>
                   <span>{user.username}</span>
-                  {isInterviewer && user.auth === "user" && <button className={SideBarCss.button_user} onClick={() => sendDataToBackEnd("shut_down", null, user.uid)}>静音</button>}
+                  {isInterviewer && user.auth === "user" && <button 
+                  className={SideBarCss.button_user} 
+                  onClick={() => {
+                  sendDataToBackEnd("shut_down", null, user.uid);
+                  setIsShut(user.id);
+                  }
+                  }>
+                    {user.isShut ? '取消静音' : '静音'}
+                    </button>}
                   {isInterviewer && user.auth === "user" && <button className={SideBarCss.button_user} onClick={() => sendDataToBackEnd("get_out", null, user.uid)}>移出</button>}
                 </div>
               ))}
